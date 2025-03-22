@@ -1,18 +1,27 @@
 import java.util.Arrays;
 
 public class ReverseArray {
+
      public static int[] reverseArray(int[] arr){
-int[] newarr=new int[arr.length];
+        int left = 0;
+        int right = arr.length - 1;
 
-         for (int i = arr.length-1,j=0; i >=0; i--) {
-             newarr[j++]=arr[i];
+        while (left < right) {
 
-         }
+            int temp = arr[left];
+            arr[left] = arr[right];
+            arr[right] = temp;
 
-return newarr;
+            left++;
+            right--;
+        }
+
+return arr;
      }
+    
+    
     public static void main(String[] args) {
-int arr[]={1,2,3,4,5,6};
+        int arr[]={1,2,3,4,5,6};
         System.out.println(Arrays.toString(reverseArray(arr)));
     }
 }
