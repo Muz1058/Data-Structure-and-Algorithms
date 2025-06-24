@@ -18,20 +18,30 @@ class AVL{
 
     }
 
-    Node insertNode(int data,Node node){
-        if(node==null) return new Node(data);
+    Node insertNode(int data,Node node) {
+        if (node == null) return new Node(data);
 
-        else if(data<node.data){
-            node.left=insertNode(data,node.left);
+        else if (data < node.data) {
+            node.left = insertNode(data, node.left);
+        } else if (data > node.data) {
+            node.right = insertNode(data, node.right);
+        } else return node;
+
+        node.height = Math.max(height(node.left), height(node.right)) + 1;
+        int balance = getBalance(node);
+        if (balance > 1 && getBalance(node.left) >= 0)
+            return rotateRight(node);
+        if (balance > 1 && getBalance(node.left) < 0) {
+            node.left = rotateLeft(node.left);
+            return rotateRight(node);
         }
-        else if(data>node.data){
-            node.right=insertNode(data,node.right);
+        if (balance < -1 && getBalance(node.right) <= 0)
+            return rotateLeft(node);
+        if (balance < -1 && getBalance(node.right) > 0) {
+            node.right = rotateRight(node.right);
+            return rotateLeft(node);
         }
-        else return node;
-
-
-
-        return null;
+        return node;
 
     }
 
@@ -49,7 +59,7 @@ class AVL{
 
     Node rotateRight(Node a){
         Node x=a.left;
-        Node temp=x.right;
+        Node temp=x.right;//null
         x.right=a;
         a.left=temp;
 
